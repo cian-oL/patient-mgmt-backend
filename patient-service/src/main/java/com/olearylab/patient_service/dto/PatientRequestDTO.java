@@ -1,5 +1,6 @@
 package com.olearylab.patient_service.dto;
 
+import com.olearylab.patient_service.dto.validator.CreatePatientValidationGroup;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,6 +24,6 @@ public class PatientRequestDTO {
     @NotBlank(message = "Date of birth is required")
     private String dateOfBirth;
 
-    @NotBlank(message = "Date of registration is required")
+    @NotBlank(groups = CreatePatientValidationGroup.class, message = "Date of registration is required")
     private String dateOfRegistration;
 }
