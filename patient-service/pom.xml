@@ -72,6 +72,12 @@
 			<version>2.3.232</version>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- https://springdoc.org/ -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.8.5</version>
+		</dependency>
 	</dependencies>
 
 	<build>
