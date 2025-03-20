@@ -2,6 +2,7 @@ package com.olearylab.patient_service.service;
 
 import com.olearylab.patient_service.dto.PatientRequestDTO;
 import com.olearylab.patient_service.dto.PatientResponseDTO;
+import com.olearylab.patient_service.exception.EmailAlreadyExistsException;
 import com.olearylab.patient_service.mapper.PatientMapper;
 import com.olearylab.patient_service.model.Patient;
 import com.olearylab.patient_service.repository.PatientRepository;
@@ -20,6 +21,10 @@ public class PatientService {
     }
 
     public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
+        if (patientRepository.existsByEmail(patientRequestDTO.getEmail())) {
+            throw new EmailAlreadyExistsException(patientRequestDTO.getEmail());
+        }
+
         Patient newPatient = patientRepository.save(PatientMapper.toModel(patientRequestDTO));
 
         return PatientMapper.toDTO(newPatient);
