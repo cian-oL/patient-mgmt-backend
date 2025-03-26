@@ -1,0 +1,38 @@
+services:
+  postgresql:
+    image: postgres:latest
+    container_name: patient-service-db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: db
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "4001:5432"
+    networks:
+      - patient-mgmt-microservices-net
+    restart: unless-stopped
+
+  patient-service:
+    image: patient-service:latest
+    container_name: patient-service
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://patient-service-db:5432/db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=example
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_SQL_INIT_DATA_LOCATIONS=classpath:dummy_data.sql
+      - SPRING_SQL_INIT_MODE=always
+    ports:
+      - "4000:4000"
+    networks:
+      - patient-mgmt-microservices-net
+    restart: unless-stopped
+
+volumes:
+  postgres:
+
+networks:
+  patient-mgmt-microservices-net:
