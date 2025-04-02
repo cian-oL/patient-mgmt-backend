@@ -31,6 +31,16 @@ services:
       - patient-mgmt-microservices-net
     restart: unless-stopped
 
+  billing-service:
+    image: billing-service:latest
+    container_name: billing-service
+    ports:
+      - "4002:4002"
+      - "5002:5002"
+    networks:
+      - patient-mgmt-microservices-net
+    restart: unless-stopped
+
 volumes:
   postgres:
 
